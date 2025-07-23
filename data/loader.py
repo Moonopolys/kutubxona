@@ -5,3 +5,4 @@ from database.dbase import Database
 
 bot = TeleBot(TOKEN)
 db = Database()
+REGISTER = {}

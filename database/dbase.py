@@ -22,7 +22,7 @@ class Database:
     def create_table_users(self):
         sql = '''CREATE TABLE IF NOT EXISTS users(
             telegram_id INTEGER NOT NULL UNIQUE,
-            login TEXT NOT NULL UNIQUE
+            login TEXT,
             password TEXT
         )'''
         self.execute(sql, commit=True)
@@ -31,6 +31,10 @@ class Database:
         sql = '''INSERT INTO users(telegram_id) VALUES (?)'''
         self.execute(sql, telegram_id, commit=True)
 
+    def update_user(self, telegram_id, login, password):
+        sql = '''UPDATE users SET login = (?), password = (?) WHERE telegram_id = (?)'''
+        self.execute(sql, login, password, telegram_id, commit=True)
+
     def get_user(self, telegram_id):
-        sql = '''SELECT * FROM users WHERE telegram_id = ?'''
+        sql = '''SELECT * FROM users WHERE telegram_id = (?)'''
         return self.execute(sql, telegram_id, fetchone=True)
