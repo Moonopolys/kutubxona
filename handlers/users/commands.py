@@ -45,3 +45,24 @@ def get_password(message: Message):
     bot.send_message(chat_id, "Tabriklaymiz siz ro'yxatdan o'tdiz!!!",
                      reply_markup=ReplyKeyboardRemove())
     bot.send_message(chat_id, "Tugmalardan birini tanlang!", reply_markup=main_buttons())
+
+# KITOB CHIQARISH
+
+@bot.message_handler(func=lambda message: message.text)
+def reaction_to_subjects(message: Message):
+    chat_id = message.chat.id
+    if message.text == "📚 maktab darsliklari":
+
+        with open("kitoblar/yozish.pdf", mode='rb') as file:
+            bot.send_document(chat_id, file.read(), caption="Darslar o'qish", visible_file_name="Yozish kitobi")
+
+    elif message.text == "📚 badiiy adabiyotlar":
+
+        with open("kitoblar/adabiyot/im.pdf", mode='rb') as file:
+            bot.send_document(chat_id, file.read())
+
+    elif message.text == "🌐 IT course":
+        bot.send_document(chat_id, "IT ga oid kitob yoq")
+
+    elif message.text == "📚 IELTS course":
+            bot.send_document(chat_id, "Bunday kitob yoq")
